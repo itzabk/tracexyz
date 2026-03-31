@@ -1,0 +1,27 @@
+{
+  "name": "tracexyz",
+  "version": "1.0.0",
+  "description": "tracexyz is a simple, fast logger for node.js with log levels, log replay, and built-in analysis to help you debug more effectively.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/itzabk/tracexyz.git"
+  },
+  "keywords": [
+    "logger",
+    "nodejs",
+    "logs",
+    "trace",
+    "debugging",
+    "observability"
+  ],
+  "author": "the_abk",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/itzabk/tracexyz/issues"
+  },
+  "homepage": "https://github.com/itzabk/tracexyz#readme"
+}
