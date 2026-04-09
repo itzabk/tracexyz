@@ -17,6 +17,7 @@ module.exports = class Logger {
     if (logLevel < this.#config.level || !this.#fileHandle) {
       return;
     }
+    await this.#rolling_check();
     await this.#fileHandle.write(message);
   }
 
@@ -81,5 +82,18 @@ module.exports = class Logger {
 
   async error(logMessage = "") {
     await this.#log(logMessage, LOG_LEVELS.ERROR);
+  }
+
+  async #rolling_check() {
+    const { sizeThreshold, timeThreshold } = this.#config.logRotateConfig;
+    const { size, birthtimeMs } = await this.#fileHandle.stat();
+    const currentTime = new Date().getTime();
+    if (
+      size > sizeThreshold ||
+      currentTime - birthtimeMs > timeThreshold * 1000
+    ) {
+      await this.#fileHandle.close();
+      await this.init();
+    }
   }
 };
