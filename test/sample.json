@@ -1,0 +1,8 @@
+{
+  "level": 0,
+  "filePrefix": "sample_",
+  "logRotateConfig": {
+    "timeThreshold": 3600,
+    "sizeThreshold": 5120
+  }
+}
