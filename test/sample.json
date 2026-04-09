@@ -1,8 +1,8 @@
 {
   "level": 0,
-  "filePrefix": "sample",
+  "filePrefix": "sample_",
   "logRotateConfig": {
-    "timeThreshold": "FiveKB",
-    "sizeThreshold": "Daily"
+    "timeThreshold": 3600,
+    "sizeThreshold": 5120
   }
 }
