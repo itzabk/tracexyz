@@ -1,6 +1,12 @@
 const LogConfig = require("../config/logConfig");
 
+const { checkOrCreateDirectory } = require("../helpers/file");
+
+const { LOG_LEVELS } = require("../constants/index");
+
 const fs = require("node:fs/promises");
+
+const path = require("node:path");
 
 module.exports = class Logger {
   #config = LogConfig.withDefaultConfig();
@@ -8,10 +14,10 @@ module.exports = class Logger {
   #fileHandle;
 
   async #log(message, logLevel) {
-    if (logLevel < this.#config.level) {
+    if (logLevel < this.#config.level || !this.#fileHandle) {
       return;
     }
-    this.#fileHandle.write(message);
+    await this.#fileHandle.write(message);
   }
 
   static withDefaultConfig() {
@@ -48,11 +54,32 @@ module.exports = class Logger {
   }
 
   async init() {
+    const logDir = checkOrCreateDirectory("logs");
     const fileName =
       this.#config.filePrefix +
-      newDate().toISOString().replace(/[\k ]/g, "-") +
+      new Date().toISOString().replace(/[:.]/g, "-") +
       ".log";
-    this.#fileHandle = await fs.open(fileName, "a+");
+    this.#fileHandle = await fs.open(path.join(logDir, fileName), "a+");
     console.log("File created successfully");
+  }
+
+  async debug(logMessage = "") {
+    await this.#log(logMessage, LOG_LEVELS.DEBUG);
+  }
+
+  async warn(logMessage = "") {
+    await this.#log(logMessage, LOG_LEVELS.WARN);
+  }
+
+  async info(logMessage = "") {
+    await this.#log(logMessage, LOG_LEVELS.INFO);
+  }
+
+  async critical(logMessage = "") {
+    await this.#log(logMessage, LOG_LEVELS.CRITICAL);
+  }
+
+  async error(logMessage = "") {
+    await this.#log(logMessage, LOG_LEVELS.ERROR);
   }
 };

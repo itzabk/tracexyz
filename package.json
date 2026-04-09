@@ -4,7 +4,7 @@
   "description": "tracexyz is a simple, fast logger for node.js with log levels, log replay, and built-in analysis to help you debug more effectively.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node test/index.cjs"
   },
   "repository": {
     "type": "git",
